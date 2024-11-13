@@ -22,4 +22,8 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="valtitlecustomer">Registar cliente</string>
     <string name="valbtsavecustomer">SAVE</string>
+    <string name="etFecha">Ingresar fecha</string>
+    <string name="etDescripcion">Ingresar una descripcion</string>
+    <string name="etMonto">Ingresar Monto</string>
+    <string name="btRegistrar">Registrar</string>
 </resources>
