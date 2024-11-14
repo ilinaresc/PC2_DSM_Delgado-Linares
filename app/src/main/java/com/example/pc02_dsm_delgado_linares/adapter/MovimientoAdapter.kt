@@ -6,24 +6,26 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pc02_dsm_delgado_linares.R
-import com.example.pc02_dsm_delgado_linares.model.Movimiento
+import com.example.pc02_dsm_delgado_linares.model.MovimientoModel
 
-class MovimientoAdapter(private val movimientos: List<Movimiento>) : RecyclerView.Adapter<MovimientoAdapter.MovimientoViewHolder>() {
+class MovimientoAdapter(private val movimientos: List<MovimientoModel>) :
+    RecyclerView.Adapter<MovimientoAdapter.ViewHolder>() {
 
-    class MovimientoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvDescription: TextView = view.findViewById(R.id.tvDescription)
-        val tvFecha: TextView = view.findViewById(R.id.tvFecha)
-        val tvMonto: TextView = view.findViewById(R.id.tvMonto)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvDescripcion: TextView = itemView.findViewById(R.id.tvDescripcion)
+        val tvFecha: TextView = itemView.findViewById(R.id.tvFecha)
+        val tvMonto: TextView = itemView.findViewById(R.id.tvMonto)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovimientoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movimiento, parent, false)
-        return MovimientoViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_movimiento, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MovimientoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movimiento = movimientos[position]
-        holder.tvDescription.text = movimiento.description
+        holder.tvDescripcion.text = movimiento.descripcion
         holder.tvFecha.text = movimiento.fecha
         holder.tvMonto.text = "S/ ${movimiento.monto}"
     }
