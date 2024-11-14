@@ -27,7 +27,7 @@ class MovimientoAdapter(private val movimientos: List<MovimientoModel>) :
         val movimiento = movimientos[position]
         holder.tvDescripcion.text = movimiento.descripcion
         holder.tvFecha.text = movimiento.fecha
-        holder.tvMonto.text = "S/ ${movimiento.monto}"
+        holder.tvMonto.text = String.format("S/ %.2f", movimiento.monto)
     }
 
     override fun getItemCount(): Int = movimientos.size
