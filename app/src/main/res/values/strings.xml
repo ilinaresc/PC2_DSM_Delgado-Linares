@@ -26,4 +26,7 @@
     <string name="etDescripcion">Ingresar una descripcion</string>
     <string name="etMonto">Ingresar Monto</string>
     <string name="btRegistrar">Registrar</string>
+    <string name="valetdescripcion">Descripción</string>
+    <string name="valetfecha">Fecha</string>
+    <string name="valetmonto">Monto</string>
 </resources>
