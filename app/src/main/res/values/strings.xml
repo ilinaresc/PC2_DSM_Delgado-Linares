@@ -17,15 +17,21 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Ingresos</string>
+    <string name="menu_gallery">Gastos</string>
+    <string name="menu_slideshow">Resumen</string>
     <string name="valtitlecustomer">Registar cliente</string>
     <string name="valbtsavecustomer">SAVE</string>
     <string name="etFecha">Ingresar fecha</string>
-    <string name="etDescripcion">Ingresar una descripcion</string>
+    <string name="etDescripcion">Ingresar una descripción</string>
     <string name="etMonto">Ingresar Monto</string>
-    <string name="btRegistrar">Registrar</string>
+    <string name="btRegistrar">Ingresar</string>
+
+    <string name="etFechaGasto">Ingresar fecha</string>
+    <string name="etDescripcionGasto">Ingresar una descripción</string>
+    <string name="etMontoGasto">Ingresar Monto</string>
+    <string name="btRegistrarGasto">Gastar</string>
+
     <string name="valetdescripcion">Descripción</string>
     <string name="valetfecha">Fecha</string>
     <string name="valetmonto">Monto</string>
