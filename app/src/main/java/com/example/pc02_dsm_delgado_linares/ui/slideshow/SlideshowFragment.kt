@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pc02_dsm_delgado_linares.R
 import com.example.pc02_dsm_delgado_linares.adapter.MovimientoAdapter
-import com.example.pc02_dsm_delgado_linares.databinding.FragmentSlideshowBinding
 import com.example.pc02_dsm_delgado_linares.model.MovimientoModel
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -32,7 +30,7 @@ class SlideshowFragment : Fragment() {
         tvBalanceTotal = view.findViewById(R.id.tvBalanceTotal)
         rvMovimientos.layoutManager = LinearLayoutManager(requireContext())
 
-        cargarMovimientos("11") // ejemplo para el mes de noviembre
+        cargarMovimientos("11")
 
         return view
     }
@@ -51,6 +49,7 @@ class SlideshowFragment : Fragment() {
 
                     val movimiento = MovimientoModel(descripcion, fecha, monto)
                     movimientos.add(movimiento)
+                    movimientos.sortByDescending { it.fecha } // Ordena para que la más antigua esté al final
                     balanceTotal += monto
                 }
 

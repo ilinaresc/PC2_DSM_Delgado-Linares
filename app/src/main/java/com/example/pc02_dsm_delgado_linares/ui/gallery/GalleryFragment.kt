@@ -2,23 +2,14 @@ package com.example.pc02_dsm_delgado_linares.ui.gallery
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.pc02_dsm_delgado_linares.R
-import com.example.pc02_dsm_delgado_linares.adapter.MovimientoAdapter
 import com.example.pc02_dsm_delgado_linares.databinding.FragmentGalleryBinding
-import com.example.pc02_dsm_delgado_linares.databinding.FragmentHomeBinding
-import com.example.pc02_dsm_delgado_linares.model.MovimientoModel
-import com.example.pc02_dsm_delgado_linares.ui.home.HomeViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
@@ -70,7 +61,9 @@ class GalleryFragment : Fragment() {
         // Obtener los valores de los campos
         val fecha = etFechaGasto.text.toString()
         val descripcion = etDescripcionGasto.text.toString()
-        val monto = etMontoGasto.text.toString().toDoubleOrNull()
+        //val monto = etMontoGasto.text.toString().toDoubleOrNull()
+        val monto = etMontoGasto.text.toString().toDouble() * -1
+
 
         // Verificar si los campos son válidos
         if (fecha.isEmpty() || descripcion.isEmpty() || monto == null) {
