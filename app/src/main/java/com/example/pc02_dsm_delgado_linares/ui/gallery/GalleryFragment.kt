@@ -1,65 +1,120 @@
 package com.example.pc02_dsm_delgado_linares.ui.gallery
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pc02_dsm_delgado_linares.R
 import com.example.pc02_dsm_delgado_linares.adapter.MovimientoAdapter
+import com.example.pc02_dsm_delgado_linares.databinding.FragmentGalleryBinding
+import com.example.pc02_dsm_delgado_linares.databinding.FragmentHomeBinding
 import com.example.pc02_dsm_delgado_linares.model.MovimientoModel
+import com.example.pc02_dsm_delgado_linares.ui.home.HomeViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 class GalleryFragment : Fragment() {
+    private var _binding: FragmentGalleryBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+    private lateinit var db: FirebaseFirestore
 
-    private lateinit var rvMovimientos: RecyclerView
-    private lateinit var tvBalanceTotal: TextView
-    private lateinit var movimientoAdapter: MovimientoAdapter
+    // EditText variables
+    private lateinit var etFechaGasto: EditText
+    private lateinit var etDescripcionGasto: EditText
+    private lateinit var etMontoGasto: EditText
 
-    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_gallery, container, false)
-        rvMovimientos = view.findViewById(R.id.rvMovimientos)
-        tvBalanceTotal = view.findViewById(R.id.tvBalanceTotal)
-        rvMovimientos.layoutManager = LinearLayoutManager(requireContext())
+    ): View {
+        val homeViewModel =
+            ViewModelProvider(this).get(GalleryViewModel::class.java)
 
-        cargarMovimientos("11") // ejemplo para el mes de noviembre
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
-        return view
+        binding.etFechaGasto.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        // Inicializar Firestore
+        db = FirebaseFirestore.getInstance()
+
+        // Inicializar los EditTexts
+        etFechaGasto = binding.etFechaGasto
+        etDescripcionGasto = binding.etDescripcionGasto
+        etMontoGasto = binding.etMontoGasto
+
+        // Configura el botón para guardar el registro
+        binding.btRegistrarGasto.setOnClickListener {
+            guardarRegistro()
+        }
+
+        return root
     }
 
-    private fun cargarMovimientos(mes: String) {
-        db.collection("Movimientos")
-            .get()
-            .addOnSuccessListener { documents ->
-                val movimientos = mutableListOf<MovimientoModel>()
-                var balanceTotal = 0.0
+    private fun guardarRegistro() {
+        // Obtener los valores de los campos
+        val fecha = etFechaGasto.text.toString()
+        val descripcion = etDescripcionGasto.text.toString()
+        val monto = etMontoGasto.text.toString().toDoubleOrNull()
 
-                for (document in documents) {
-                    val descripcion = document.getString("descripcion") ?: ""
-                    val fecha = document.getString("fecha") ?: ""
-                    val monto = document.getDouble("monto") ?: 0.0
+        // Verificar si los campos son válidos
+        if (fecha.isEmpty() || descripcion.isEmpty() || monto == null) {
+            Toast.makeText(requireContext(), "Por favor, llena todos los campos.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-                    val movimiento = MovimientoModel(descripcion, fecha, monto)
-                    movimientos.add(movimiento)
-                    balanceTotal += monto
-                }
+        // Crear el registro en formato HashMap
+        val movimiento = hashMapOf(
+            "fecha" to fecha,
+            "descripcion" to descripcion,
+            "monto" to monto
+        )
 
-                movimientoAdapter = MovimientoAdapter(movimientos)
-                rvMovimientos.adapter = movimientoAdapter
-                tvBalanceTotal.text = "Balance Total: S/ $balanceTotal"
+        // Guardar en Firestore
+        db.collection("Movimientos")  // Nombre de la colección
+            .add(movimiento)  // Agregar un documento
+            .addOnSuccessListener { documentReference ->
+                // Mostrar mensaje de éxito
+                Toast.makeText(requireContext(), "Registro agregado con éxito", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
-                Log.e("FirestoreError", "Error al obtener documentos", exception)
+            .addOnFailureListener { e ->
+                // Mostrar mensaje de error
+                Toast.makeText(requireContext(), "Error al agregar el registro", Toast.LENGTH_SHORT).show()
             }
+    }
 
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+            // Formatea la fecha seleccionada y la muestra en el EditText
+            val formattedDate = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+            binding.etFechaGasto.setText(formattedDate)
+        }, year, month, day)
+
+        datePickerDialog.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

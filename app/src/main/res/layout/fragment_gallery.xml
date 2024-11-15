@@ -7,25 +7,59 @@
     android:layout_height="match_parent"
     tools:context=".ui.gallery.GalleryFragment" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <EditText
+        android:id="@+id/etFechaGasto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/etFechaGasto"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvBalanceTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+    <EditText
+        android:id="@+id/etDescripcionGasto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/etDescripcionGasto"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etFechaGasto" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovimientos"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+    <EditText
+        android:id="@+id/etMontoGasto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="@string/etMontoGasto"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDescripcionGasto" />
 
-    </LinearLayout>
+    <Button
+        android:id="@+id/btRegistrarGasto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#673AB7"
+        android:text="@string/btRegistrarGasto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etMontoGasto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
